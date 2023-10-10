@@ -12,15 +12,18 @@ const List = () => {
   const dispatch = useDispatch();
   const scrollPosition = useScrollPosition();
 
-  useEffect(() => {
+  const fetchDataHandler = () => {
     dispatch(fetchData({ page, perPage }));
     setPage((previousValue) => previousValue + 1);
+  };
+
+  useEffect(() => {
+    fetchDataHandler();
   }, []);
 
   useEffect(() => {
     if (scrollPosition > 95 && !isLoading && list.length < total) {
-      dispatch(fetchData({ page, perPage }));
-      setPage((previousValue) => previousValue + 1);
+      fetchDataHandler();
     }
   }, [scrollPosition]);
 
